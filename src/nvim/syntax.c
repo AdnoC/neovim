@@ -6965,7 +6965,8 @@ set_hl_attr (
 
   if (at_en.cterm_fg_color != 0 || at_en.cterm_bg_color != 0
       || at_en.rgb_fg_color != -1 || at_en.rgb_bg_color != -1
-      || at_en.cterm_ae_attr != 0 || at_en.rgb_ae_attr != 0) {
+      || at_en.cterm_ae_attr != 0 || at_en.rgb_ae_attr != 0
+      || at_en.rgb_sp_color != -1) {
     sgp->sg_attr = get_attr_entry(&at_en);
   }
 }
