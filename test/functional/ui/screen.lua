@@ -425,6 +425,10 @@ function Screen:_handle_update_bg(bg)
   self._bg = bg
 end
 
+function Screen:_handle_update_sp(sp)
+  self._sp = sp
+end
+
 function Screen:_handle_suspend()
   self.suspended = true
 end
@@ -573,7 +577,7 @@ function Screen:_pprint_attrs(attrs)
     local items = {}
     for f, v in pairs(attrs) do
       local desc = tostring(v)
-      if f == "foreground" or f == "background" then
+      if f == "foreground" or f == "background" or f == "special" then
         if Screen.colornames[v] ~= nil then
           desc = "Screen.colors."..Screen.colornames[v]
         end
