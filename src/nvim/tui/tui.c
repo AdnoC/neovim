@@ -58,6 +58,7 @@ typedef struct {
   int out_fd;
   bool can_use_terminal_scroll;
   bool mouse_enabled;
+  bool cursor_hidden;
   bool busy;
   HlAttrs print_attrs;
   int showing_mode;
@@ -86,6 +87,8 @@ UI *tui_start(void)
   ui->clear = tui_clear;
   ui->eol_clear = tui_eol_clear;
   ui->cursor_goto = tui_cursor_goto;
+  ui->cursor_visible = tui_cursor_visible;
+  ui->cursor_invisible = tui_cursor_invisible;
   ui->update_menu = tui_update_menu;
   ui->busy_start = tui_busy_start;
   ui->busy_stop = tui_busy_stop;
@@ -418,6 +421,18 @@ static void tui_cursor_goto(UI *ui, int row, int col)
   TUIData *data = ui->data;
   ugrid_goto(&data->grid, row, col);
   unibi_goto(ui, row, col);
+}
+
+static void tui_cursor_visible(UI *ui)
+{
+  TUIData *data = ui->data;
+  data->cursor_hidden = true;
+}
+
+static void tui_cursor_invisible(UI *ui)
+{
+  TUIData *data = ui->data;
+  data->cursor_hidden = false;
 }
 
 static void tui_update_menu(UI *ui)
@@ -900,7 +915,7 @@ static void flush_buf(UI *ui)
   uv_buf_t buf;
   TUIData *data = ui->data;
 
-  if (!data->busy) {
+  if (!data->busy && !data->cursor_hidden) {
     // not busy and the cursor is invisible(see below). Append a "cursor
     // normal" command to the end of the buffer.
     data->bufsize += CNORM_COMMAND_MAX_SIZE;

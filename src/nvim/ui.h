@@ -20,6 +20,8 @@ struct ui_t {
   void (*clear)(UI *ui);
   void (*eol_clear)(UI *ui);
   void (*cursor_goto)(UI *ui, int row, int col);
+  void (*cursor_visible)(UI *ui);
+  void (*cursor_invisible)(UI *ui);
   void (*update_menu)(UI *ui);
   void (*busy_start)(UI *ui);
   void (*busy_stop)(UI *ui);

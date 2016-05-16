@@ -35,6 +35,8 @@ UI *ui_bridge_attach(UI *ui, ui_main_fn ui_main, event_scheduler scheduler)
   rv->bridge.clear = ui_bridge_clear;
   rv->bridge.eol_clear = ui_bridge_eol_clear;
   rv->bridge.cursor_goto = ui_bridge_cursor_goto;
+  rv->bridge.cursor_visible = ui_bridge_cursor_visible;
+  rv->bridge.cursor_invisible = ui_bridge_cursor_invisible;
   rv->bridge.update_menu = ui_bridge_update_menu;
   rv->bridge.busy_start = ui_bridge_busy_start;
   rv->bridge.busy_stop = ui_bridge_busy_stop;
@@ -151,6 +153,22 @@ static void ui_bridge_cursor_goto_event(void **argv)
 {
   UI *ui = UI(argv[0]);
   ui->cursor_goto(ui, PTR2INT(argv[1]), PTR2INT(argv[2]));
+}
+
+static void ui_bridge_cursor_visible(UI *b) {
+  UI_CALL(b, cursor_visible, 1, b);
+}
+static void ui_bridge_cursor_visible_event(void **argv) {
+  UI *ui = UI(argv[0]);
+  ui->cursor_visible(ui);
+}
+
+static void ui_bridge_cursor_invisible(UI *b) {
+  UI_CALL(b, cursor_invisible, 1, b);
+}
+static void ui_bridge_cursor_invisible_event(void **argv) {
+  UI *ui = UI(argv[0]);
+  ui->cursor_invisible(ui);
 }
 
 static void ui_bridge_update_menu(UI *b)

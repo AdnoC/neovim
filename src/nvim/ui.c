@@ -329,6 +329,16 @@ void ui_cursor_goto(int new_row, int new_col)
   pending_cursor_update = true;
 }
 
+void ui_cursor_visible(void)
+{
+  UI_CALL(cursor_visible);
+}
+
+void ui_cursor_invisible(void)
+{
+  UI_CALL(cursor_invisible);
+}
+
 void ui_update_menu(void)
 {
     UI_CALL(update_menu);
