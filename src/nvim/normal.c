@@ -3921,6 +3921,8 @@ static void nv_mousescroll(cmdarg_T *cap)
     curbuf = curwin->w_buffer;
   }
 
+  curwin->w_scrolling = true;
+
   if (cap->arg == MSCR_UP || cap->arg == MSCR_DOWN) {
     if (mod_mask & (MOD_MASK_SHIFT | MOD_MASK_CTRL)) {
       (void)onepage(cap->arg ? FORWARD : BACKWARD, 1L);
@@ -3970,7 +3972,7 @@ void scroll_redraw(int up, long count)
     scrollup(count, true);
   else
     scrolldown(count, true);
-  if (p_so) {
+  if (!curwin->w_scrolling && p_so) {
     /* Adjust the cursor position for 'scrolloff'.  Mark w_topline as
      * valid, otherwise the screen jumps back at the end of the file. */
     cursor_correct();
@@ -3997,6 +3999,17 @@ void scroll_redraw(int up, long count)
        * end of the file. */
       check_cursor_moved(curwin);
       curwin->w_valid |= VALID_TOPLINE;
+    }
+  } else if (curwin->w_scrolling) {
+    if (curwin->w_cursor.lnum >= curwin->w_botline
+        || curwin->w_cursor.lnum < curwin->w_topline) {
+      if (!curwin->w_cursor_invisible) {
+        ui_cursor_invisible();
+        curwin->w_cursor_invisible = true;
+      }
+    } else if (curwin->w_cursor_invisible) {
+      ui_cursor_visible();
+      curwin->w_cursor_invisible = false;
     }
   }
   if (curwin->w_cursor.lnum != prev_lnum)

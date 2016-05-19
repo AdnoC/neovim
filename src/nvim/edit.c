@@ -7740,12 +7740,16 @@ static void ins_mousescroll(int dir)
     curwin = mouse_find_win(&row, &col);
     curbuf = curwin->w_buffer;
   }
+
+  curwin->w_scrolling = true;
+
   if (curwin == old_curwin)
     undisplay_dollar();
 
   /* Don't scroll the window in which completion is being done. */
   if (!pum_visible()
       || curwin != old_curwin
+      || true
       ) {
     if (dir == MSCR_DOWN || dir == MSCR_UP) {
       if (mod_mask & (MOD_MASK_SHIFT | MOD_MASK_CTRL))

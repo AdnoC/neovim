@@ -423,16 +423,19 @@ static void tui_cursor_goto(UI *ui, int row, int col)
   unibi_goto(ui, row, col);
 }
 
+#include "nvim/m_log.h"
 static void tui_cursor_visible(UI *ui)
 {
+  PRNTLG("CURSOR VISIBLE")
   TUIData *data = ui->data;
-  data->cursor_hidden = true;
+  data->cursor_hidden = false;
 }
 
 static void tui_cursor_invisible(UI *ui)
 {
+  PRNTLG("CURSOR_INVISIBLE")
   TUIData *data = ui->data;
-  data->cursor_hidden = false;
+  data->cursor_hidden = true;
 }
 
 static void tui_update_menu(UI *ui)

@@ -1089,6 +1089,9 @@ struct window_S {
 
   char_u      *w_localdir;          /* absolute path of local directory or
                                        NULL */
+  bool w_scrolling;
+  bool w_cursor_invisible;
+
   /*
    * Options local to a window.
    * They are local because they influence the layout of the window or

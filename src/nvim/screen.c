@@ -6350,6 +6350,11 @@ void setcursor(void)
 {
   if (redrawing()) {
     validate_cursor();
+    if (!curwin->w_scrolling && curwin->w_cursor_invisible) {
+      curwin->w_cursor_invisible = false;
+      ui_cursor_visible();
+    }
+
     ui_cursor_goto(curwin->w_winrow + curwin->w_wrow,
         curwin->w_wincol + (
           /* With 'rightleft' set and the cursor on a double-wide
@@ -6360,6 +6365,7 @@ void setcursor(void)
                                && vim_isprintc(gchar_cursor())) ? 2 :
                               1)) :
           curwin->w_wcol));
+    //}
   }
 }
 
