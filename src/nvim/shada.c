@@ -2335,7 +2335,7 @@ static inline void add_search_pattern(PossiblyFreedShadaEntry *const ret_pse,
 /// @param[in]  wms  The WriteMergerState used when writing.
 /// @param[in]  max_reg_lines  The maximum number of register lines.
 static inline void shada_initialize_registers(WriteMergerState *const wms,
-                                       int max_reg_lines)
+                                              int max_reg_lines)
   FUNC_ATTR_NONNULL_ALL FUNC_ATTR_ALWAYS_INLINE
 {
   const void *reg_iter = NULL;
