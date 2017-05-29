@@ -720,12 +720,14 @@ describe('In autoload/shada.vim', function()
         '  # Expected integer',
         '  + rw   block width  ""',
         '  + rt   type         BLOCKWISE',
-        '  + ru   is_unnamed   FALSE',
+        '  # Expected boolean',
+        '  + ru   is_unnamed   ""',
       }, ([[ [{'type': 5, 'timestamp': 0, 'data': {
         'n': 0x20,
         'rc': ['abcdefghijklmnopqrstuvwxyz', 'abcdefghijklmnopqrstuvwxyz'],
         'rw': "",
         'rt': 2,
+        'ru': ""
       }}] ]]):gsub('\n', ''))
       sd2strings_eq({
         'Register with timestamp ' .. epoch .. ':',
@@ -738,12 +740,14 @@ describe('In autoload/shada.vim', function()
         '  # Unexpected enum value: expected one of 0 (CHARACTERWISE), '
         .. '1 (LINEWISE), 2 (BLOCKWISE)',
         '  + rt   type         10',
-        '  + ru   is_unnamed   FALSE',
+        '  # Expected boolean',
+        '  + ru   is_unnamed   ["abc", "def"]',
       }, ([[ [{'type': 5, 'timestamp': 0, 'data': {
         'n': 0x20,
         'rc': 0,
         'rw': -1,
         'rt': 10,
+        'ru': ['abc', 'def'],
       }}] ]]):gsub('\n', ''))
       sd2strings_eq({
         'Register with timestamp ' .. epoch .. ':',
