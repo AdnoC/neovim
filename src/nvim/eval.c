@@ -14880,7 +14880,9 @@ free_lstval:
   rettv->vval.v_number = 0;
 
   if (set_unnamed) {
-    op_register_set_previous(regname);
+    if (!op_register_set_previous(regname)) {
+      EMSG("Unable to set previous yank register");
+    }
   }
 }
 
