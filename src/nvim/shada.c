@@ -285,9 +285,9 @@ typedef struct {
       char name;
       MotionType type;
       char **contents;
+      bool is_unnamed;
       size_t contents_size;
       size_t width;
-      bool is_unnamed;
       dict_T *additional_data;
     } reg;
     struct global_var {
@@ -2329,12 +2329,14 @@ static inline void add_search_pattern(PossiblyFreedShadaEntry *const ret_pse,
   }
 }
 
-/// Initializes registers for writing to the ShaDa file
+/// Initialize registers for writing to the ShaDa file
 ///
 /// @param[in]  wms  The WriteMergerState used when writing.
-/// @param[in]  max_reg_lines The maximum number of register lines.
+/// @param[in]  max_reg_lines  The maximum number of register lines.
 static void shada_initialize_registers(WriteMergerState *const wms,
-                                       int max_reg_lines) {
+                                       int max_reg_lines)
+  FUNC_ATTR_NONNULL_ALL FUNC_ATTR_ALWAYS_INLINE
+{
   const void *reg_iter = NULL;
   const bool limit_reg_lines = max_reg_lines >= 0;
   do {
