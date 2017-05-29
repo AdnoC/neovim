@@ -2348,7 +2348,7 @@ static inline void shada_initialize_registers(WriteMergerState *const wms,
     if (name == NUL) {
       break;
     }
-    if (limit_reg_lines && reg.y_size > max_reg_lines) {
+    if (limit_reg_lines && reg.y_size > (size_t)max_reg_lines) {
       continue;
     }
     wms->registers[op_reg_index(name)] = (PossiblyFreedShadaEntry) {
